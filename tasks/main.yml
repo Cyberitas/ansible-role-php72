@@ -18,7 +18,6 @@
     php_packages: "{{ php_packages | list + php_packages_devel | list }}"
   when: php_packages_devel is defined
 
-
 # Setup/install tasks.
 - include_tasks: setup-RedHat.yml
   when:
@@ -26,4 +25,3 @@
 
 # Configure PHP.
 - include_tasks: configure.yml
-
