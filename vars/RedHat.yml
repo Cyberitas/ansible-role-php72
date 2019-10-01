@@ -16,7 +16,6 @@ php_packages:
   - php-xml
   - php-xmlrpc
 
-
 web_service: "httpd"
 
 conf_paths:
@@ -26,4 +25,3 @@ conf_paths_additional:
   - /etc/php.d
 
 __php_repo: "remi"
-

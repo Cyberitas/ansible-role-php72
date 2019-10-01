@@ -26,4 +26,3 @@
     mode: 0644
   with_items: "{{ conf_paths }}"
   notify: restart webserver
-
