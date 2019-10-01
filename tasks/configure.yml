@@ -1,0 +1,29 @@
+---
+- name: Ensure configuration directories exist.
+  file:
+    path: "{{ item }}"
+    state: directory
+    follow: true
+  with_flattened:
+    - "{{ conf_paths }}"
+    - "{{ conf_paths_additional }}"
+
+- name: Define php.ini file path
+  set_fact:
+    php_ini: "php.ini.j2"
+
+- name: Add custom path for php.ini when custom template provided
+  set_fact:
+    php_ini: "{{ php_ini_path }}/{{ php_ini }}"
+  when: php_ini_path is defined
+
+- name: Place PHP configuration file in place.
+  template:
+    src: "{{ php_ini }}"
+    dest: "{{ item }}/php.ini"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ conf_paths }}"
+  notify: restart webserver
+

@@ -1,0 +1,49 @@
+---
+- name: Define PHP repos to use.
+  set_fact:
+    php_repos: "{{ __php_repo }}"
+  when: php_repos is not defined
+
+- name: Get PHP version format - remove periods in version numbers.
+  set_fact:
+    version_num: "{{ web_language_role_version | replace('.', '') }}"
+  when: web_language_role_version is defined
+
+- name: Get PHP version format - reduce to 2 characters.
+  set_fact:
+    version_num: "{{ version_num[0:2] }}"
+  when: web_language_role_version is defined
+
+- name: Use PHP version default if web_language_role_version is not defined
+  set_fact:
+    version_num: "72"
+  when: web_language_role_version is not defined
+
+- name: Format name for php version specific repos name.
+  set_fact:
+    php_repos_with_version: "remi-php{{ version_num }}"
+  when: version_num is defined
+
+- name: Install remi repo.
+  yum:
+    name: http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    state: present
+
+- name: Import remi GPG key.
+  rpm_key:
+    key: http://rpms.remirepo.net/RPM-GPG-KEY-remi
+    state: present
+
+- name: Enable php repo
+  ini_file:
+    dest: "/etc/yum.repos.d/{{ php_repos_with_version }}.repo"
+    section: "{{ php_repos_with_version }}"
+    option: enabled
+    value: "1"
+
+- name: Ensure PHP packages are installed.
+  package:
+    name: "{{ php_packages }}"
+    state: present
+    enablerepo: "{{ php_repos }},{{ php_repos_with_version }}"
+  notify: restart webserver
