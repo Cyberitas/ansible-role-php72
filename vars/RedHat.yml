@@ -1,5 +1,5 @@
 ---
-php_packages:
+__php_modules:
   - php
   - php-cli
   - php-common
@@ -16,12 +16,14 @@ php_packages:
   - php-xml
   - php-xmlrpc
 
-web_service: "httpd"
+__web_service: "httpd"
 
-conf_paths:
+__conf_paths:
   - /etc
 
-conf_paths_additional:
+__conf_paths_additional:
   - /etc/php.d
 
 __php_repo: "remi"
+
+__php_ini_path: /etc/php.ini

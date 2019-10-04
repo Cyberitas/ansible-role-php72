@@ -2,7 +2,7 @@
 - name: Define php.ini path when php_ini_path is not set
   set_fact:
     php_ini: "{{ __php_ini_path }}"
-  when: php_ini_path is not defined
+  when: __php_ini_path is not defined
 
 - name: Place PHP configuration file in place.
   template:
