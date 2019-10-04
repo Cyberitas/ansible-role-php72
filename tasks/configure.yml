@@ -7,7 +7,7 @@
 - name: Place PHP configuration file in place.
   template:
     src: php.ini.j2
-    dest: "{{ php.ini }}"
+    dest: "{{ php_ini }}"
     owner: root
     group: root
     mode: 0644
