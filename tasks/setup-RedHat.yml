@@ -45,5 +45,5 @@
   package:
     name: "{{ php_modules }}"
     state: present
-    enablerepo: "{{ php_repos }},{{ php_repos_with_version }}"
+    enablerepo: "{{ php_repo }},{{ php_repos_with_version }}"
   notify: restart webserver
