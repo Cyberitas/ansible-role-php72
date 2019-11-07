@@ -39,7 +39,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: jhd3.ansible_role_php72 }
+         - { role: cyberitas.ansible_role_php72 }
 
 License
 -------
